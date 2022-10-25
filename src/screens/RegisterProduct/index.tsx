@@ -36,7 +36,7 @@ export default function RegisterProduct() {
     defaultValues: {
       name: "",
       brand: "",
-      categorty: "",
+      category: "",
       unity: "",
       market: "",
       price: "",
@@ -56,7 +56,6 @@ export default function RegisterProduct() {
       setBrands(content);
     });
     api.get<UnityDTO[]>("/fieldutils/unity").then(({ data }) => {
-      console.log(data);
       setUnities(data);
     });
   }, []);
@@ -83,7 +82,7 @@ export default function RegisterProduct() {
     return null;
   }
 
-  function OnSubmit({ name, price, unity, brand, categorty, market }) {
+  function OnSubmit({ name, price, unity, brand, category, market }) {
     setIsLoading(true);
 
     api.post("register/product", {
@@ -91,7 +90,7 @@ export default function RegisterProduct() {
       price,
       unity,
       brand,
-      categorty,
+      category,
       market,
     })
       .then(() => {
@@ -101,6 +100,7 @@ export default function RegisterProduct() {
       })  
       .catch((err) => {
         Alert.alert("Não foi possível cadastrar o produto, tente novamente!");
+        console.log(err);
       })
       .finally(() => setIsLoading(false));
   }
@@ -179,7 +179,7 @@ export default function RegisterProduct() {
 
         <Controller
           control={control}
-          name="categorty"
+          name="category"
           rules={{
             maxLength: {
               value: 50,
@@ -200,7 +200,7 @@ export default function RegisterProduct() {
               _selectedItem={{
                 bg: "primary.400",
               }}
-              mb={!!errors.categorty ? 2 : 4}
+              mb={!!errors.category ? 2 : 4}
             >
               {categories.map(({ name, id }) => (
                 <NBSelect.Item
@@ -214,7 +214,7 @@ export default function RegisterProduct() {
         />
        
 
-        {getErrorMsg("categorty")}
+        {getErrorMsg("category")}
 
         <Controller
           control={control}
